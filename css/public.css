@@ -1,0 +1,56 @@
+.fr{float:right}
+.fl{float: left;}
+.layui-logo{ color: #fff !important; font-size: 26px !important;font-weight: bold;}
+.iframe_box{padding: 20px; box-sizing: border-box;}
+.width_80{width: 80%; margin: 0 auto;}
+.layui-tab-item{padding-top: 10px !important;position: relative;}
+.layui-tab-item,.layui-tab-item iframe{height: 100%;}
+.box_sizing{ box-sizing:border-box;width:100%;padding:0 20px;}
+.inline_margin{margin:0 10px;}
+.layui-col-md6{margin-bottom: 15px;}
+textarea{ resize: none !important;}
+.layui-body{ bottom: 10px !important;}
+.layui-nav-tree .layui-icon{font-size: 20px;margin-right: 20px;}
+.layui-header{background-color: #393D49 !important;}
+.layui-progress{margin: 10px 0;}
+.layui-progress-bar{display: none;}
+.layui-progress,.layui-progress-bar{height: 4px;}
+.logo_back{margin:0;padding:0;width: 100%;height: 100%; overflow: hidden; }
+.logo_box{width:25%; height: 300px;position: absolute;z-index:10; top: 50%;left: 50%;margin-top: -150px;margin-left:-12.5%;}
+.logo_title{ color: #009688; text-align: center;line-height:50px}
+.logo_form{border: 2px solid #009688; border-radius:15px; padding: 15px;padding-top: 25px; box-sizing: border-box;width: 100%; height: 200px;margin-top: 20px;}
+.logo_box .layui-form-label{ color: #009688;width: 45px;}
+.logo_box .layui-input-block{margin-left: 75px;}
+input[type="password"]{background: #fff;}
+.logo_box .layui-form-item,.change_pass .layui-form-item{ text-align: center;}
+.logo_shard{ position: fixed;top:0; left:0; width:100%;height: 100%;z-index: 1000; background: rgba(0,0,0,0.3);}
+.layui-tab-item iframe{position: relative; top: 30px; opacity:0; }
+.layui-tab-brief>.layui-tab-title .layui-this{ background: #009688;  color: #fff;}
+thead tr{background-color:transparent !important; }
+thead{background: linear-gradient(to bottom,#d5d7d6, #fff); box-shadow: 0px 3px 3px rgba(0,0,0,0.1) inset;}
+.layui-nav-itemed .layui-nav-child{padding-left: 20px; box-sizing: border-box;}
+.line{width: 100%; height: 500px;padding: 15px; box-sizing: border-box;}
+.change_pass{position: absolute;padding: 20px; box-sizing: border-box; width: 40%; height:240px; border: 2px solid #009688; border-radius: 10px;top:50%; left: 50%; margin: -120px 0 0 -20%;}
+.text_algin{ text-align: center;}
+.layui-tab-title{ border-bottom-width: 2px;}
+.logo_video{position: absolute; top: 0;left: 0; width:100%;min-height:100%;}
+.lock_box{width: 20%;position: absolute;z-index: 10; top: 50%;height: 140px;left: 50%; margin: -70px 0 0 -10%; border: 2px solid #009688; box-sizing: border-box; padding: 20px; border-radius:10px;}
+.lock_box .text_algin{margin-top: 20px;}
+.lock_box .layui-form-label{  color: #009688;}
+.logo_shard,.layui-tab{display: none;}
+.admin_title{position: absolute;top: 50%; width: 100%; margin-top: -25px; height: 50px; font-size: 36px; font-weight: bold; color: #393D49 ; text-align: center;}
+.user_img{ width: 80px;height: 80px; display: block; margin: 5px auto; border-radius: 50%;}
+.user_name{ text-align: center; line-height: 40px; font-size: 16px;margin-bottom: 10px;}
+
+
+
+
+
+
+
+
+
+
+
+
+

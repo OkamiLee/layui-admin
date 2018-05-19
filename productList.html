@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	    <meta name="Author" content="Lee">
+	    <meta name="Keywords" content="后台模板">
+	    <title></title>
+	    <link rel="stylesheet" href="layui/css/layui.css">
+	    <link rel="stylesheet" href="css/public.css" />
+	    <script src="layui/layui.js"></script>
+	</head>
+	<body>
+		<div class="box_sizing">
+			<div class="layui-form">
+			  	搜索ID：
+			  	<div class="layui-inline inline_margin">
+			    	<input class="layui-input" name="id" id="demoReload" autocomplete="off">
+			  	</div>
+			  	<button class="layui-btn" data-type="reload">搜索</button>
+			  	<div class="layui-inline inline_margin">
+			      	<div class="layui-input-inline">
+				        <select name="modules" lay-verify="required" lay-search="">
+				          	<option value="">直接选择或搜索选择</option>
+				          	<option value="1">layer</option>
+				          	<option value="2">form</option>
+				        </select>
+			      	</div>
+			    </div>
+			    <button class="layui-btn" data-type="reload">搜索</button>
+			</div>
+			<table class="layui-hide" id="LAY_table_user" lay-filter="news"></table> 
+		</div>
+		
+	</body>
+	<script type="text/html" id="barDemo">
+	  	<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+	  	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	  	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+	<script>
+		layui.use(['element','table'], function(){
+		  	var table = layui.table;
+		 	table.render({
+			    elem: '#LAY_table_user'
+			    ,url: 'table.json'
+			    ,cols: [[
+			      	{checkbox: true, fixed: true, width: 80}
+			      	,{field:'id', title: 'ID', fixed: true, width: 80}
+			      	,{field:'username', title: '用户名', width: 80}
+			      	,{field:'sex', title: '性别', width: 80}
+			      	,{field:'city', title: '城市', width: 80}
+			      	,{field:'sign', title: '签名', width: 80}
+			      	,{field:'experience', title: '积分', width: 80}
+			      	,{field:'score', title: '评分', width: 80}
+			      	,{field:'classify', title: '职业', width: 80}
+			      	,{field:'wealth', title: '财富', minWidth: 120}
+			      	,{fixed: 'right',title: '操作', minWidth: 150,align:'center',toolbar: '#barDemo'}
+			    ]]
+			    ,id: 'testReload'
+			    //,page: true
+			    
+		  	});
+		  	table.on('tool(news)',function(obj){
+		  		var data = obj.data;
+		  		var layEvent = obj.event; 
+			  	var tr = obj.tr; //获得当前行 tr 的DOM对象
+			  	if(layEvent === 'detail'){ //查看
+			   		layer.msg(data.username+'查看')
+			 	} else if(layEvent === 'del'){ //删除
+			 		obj.del();
+			  	  	layer.msg(data.username+'删除')
+			  	} else if(layEvent === 'edit'){ //编辑
+			    	layer.msg(data.username+'编辑')
+			  	}
+		  	});
+		  	var $ = layui.$, active = {
+		   	 	reload: function(){
+		      		var demoReload = $('#demoReload');
+		      		table.reload('testReload', {
+				        page: {
+				          curr: 1 //重新从第 1 页开始
+				        }
+				        ,where: {
+				          key: {
+				            id: demoReload.val()
+				          }
+				        }
+		      		});
+		    	}
+		  	};
+		  	$('.demoTable .layui-btn').on('click', function(){
+		    	var type = $(this).data('type');
+		    	active[type] ? active[type].call(this) : '';
+		  	});
+		});
+	</script>
+</html>

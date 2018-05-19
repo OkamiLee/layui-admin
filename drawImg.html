@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="layui/css/layui.css" />
+		<link rel="stylesheet" href="css/public.css" />
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+		<script type="text/javascript" src="js/zm-canvas-crop.js" ></script>
+		<style>
+			.upload_box{position: relative;width: 120px;height: 40px;margin: 0 auto;}
+			.upload_box .layui-btn,#ipt{position:absolute ; top: 0; left: 0;width: 110px;height: 38px;}
+			#ipt{opacity: 0;}
+			.canvas-box{ width: 300px; height: 300px; position: relative;-webkit-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none }
+			.canvas-box .overlay{ position: absolute; left: 0; top: 0; cursor: move;border:1px solid #69f;}
+			.canvas-box div,.canvas-box canvas{-webkit-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none}
+
+		</style>
+	</head>
+	<body>
+		<div>
+			<div class="upload_box">
+				<button type="button" class="layui-btn" id="test1">
+			  		<i class="layui-icon">&#xe67c;</i>上传图片
+				</button>
+				<input type="file" value="select img" id="ipt" value="选择图片">
+			</div>
+			<div class="canvas-box"></div>
+			<div class="layui-form-item text_algin">
+				<button class="layui-btn" id="save">保存</button>	  	
+			</div>
+		</div>
+	</body>
+	<script>
+		
+		var base = '';
+		var c = new ZmCanvasCrop({
+			fileInput: $('#ipt')[0],  
+			saveBtn: $('#save')[0],
+			box_width: 300,  //剪裁容器的最大宽度
+			box_height: 300, //剪裁容器的最大高度
+			min_width: 640,  //要剪裁图片的最小宽度
+			min_height: 640  //要剪裁图片的最小高度
+		}, saveCallBack);
+		function saveCallBack(base64) {
+			localStorage.setItem('base',base64);
+		}
+		document.getElementById("save").addEventListener('click',function(){
+			var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+			parent.layer.close(index);
+			parent.imgAttr(localStorage.getItem('base'));
+		})
+
+	</script>
+</html>

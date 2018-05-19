@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	    <meta name="Author" content="Lee">
+	    <meta name="Keywords" content="后台模板">
+		<title></title>
+		<link rel="stylesheet" href="layui/css/layui.css" />
+		<link rel="stylesheet" href="css/public.css" />
+	</head>
+	<body>
+		<ul id="tree"></ul>
+	</body>
+	<script type="text/javascript" src="layui/layui.all.js" ></script>
+	<script type="text/javascript" src="js/zhuogan.js" ></script>
+	<script>
+		layui.use(['jquery','element'],function(){
+			var $ = layui.jquery;
+
+		})
+		zg.tree({
+			el:'#tree'
+			,cb:function(item){
+		      	layer.msg('当前节名称：'+ item.name + '<br>全部参数：'+ JSON.stringify(item));
+		    }
+			,data:[
+		  		{
+			        name: '一级'
+			        ,id: 1
+			        ,children: [
+			          	{
+				            name: '二级'
+				            ,id: 11
+				        }, {
+				            name: '二级'
+				            ,id: 12
+				        }, {
+				            name: '二级'
+				            ,id: 13
+				        }
+			        ]
+			    }
+			  	,{
+			        name: '一级'
+			        ,id: 2
+			        ,children: [
+				        {
+				            name: '二级'
+				            ,id: 21
+				        }, {
+				            name: '二级'
+				            ,id: 22
+				            ,children: [
+				              	{	
+					                name: '三级'
+					                ,id: 221
+					            }
+					            ,{
+					                name: '三级'
+					                ,id: 222
+					            }
+				            ]
+				        }
+			        ]
+			    }
+			]
+		})
+		zg.init('jquery',function(){
+			var $ = layui.$;
+		})
+	</script>
+</html>

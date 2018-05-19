@@ -1,0 +1,114 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 1000,
+    "data": [{
+            "id": 10000,
+            "username": "user-0",
+            "sex": 0,
+            "city": 1,
+            "sign": "签名-0",
+            "experience": 499,
+            "logins": 138,
+            "wealth": 6200729855555555555555555555555555555555555555555,
+            "classify": 0,
+            "score": "11.47"
+        },
+        {
+            "id": 10001,
+            "username": "user-1",
+            "sex": 1,
+            "city": 2,
+            "sign": "签名-1",
+            "experience": 960,
+            "logins": 24,
+            "wealth": 71513669,
+            "classify": 1,
+            "score": "28.34"
+        },
+        {
+            "id": 10002,
+            "username": "user-2",
+            "sex": 0,
+            "city": 0,
+            "sign": "签名-2",
+            "experience": 911,
+            "logins": 49,
+            "wealth": 12867792,
+            "classify": 2,
+            "score": "25.85"
+        },
+        {
+            "id": 10003,
+            "username": "user-3",
+            "sex": 1,
+            "city": 2,
+            "sign": "签名-3",
+            "experience": 112,
+            "logins": 32,
+            "wealth": 6736741,
+            "classify": 2,
+            "score": "95.36"
+        },
+        {
+            "id": 10004,
+            "username": "user-4",
+            "sex": 0,
+            "city": 3,
+            "sign": "签名-4",
+            "experience": 695,
+            "logins": 159,
+            "wealth": 70617394,
+            "classify": 4,
+            "score": "42.48"
+        },
+        {
+            "id": 10005,
+            "username": "user-5",
+            "sex": 0,
+            "city": 3,
+            "sign": "签名-5",
+            "experience": 407,
+            "logins": 88,
+            "wealth": 98900963,
+            "classify": 0,
+            "score": "77.31"
+        },
+        {
+            "id": 10006,
+            "username": "user-6",
+            "sex": 1,
+            "city": 1,
+            "sign": "签名-6",
+            "experience": 230,
+            "logins": 73,
+            "wealth": 4063839,
+            "classify": 4,
+            "score": "72.66"
+        },
+        {
+            "id": 10007,
+            "username": "user-7",
+            "sex": 0,
+            "city": 2,
+            "sign": "签名-7",
+            "experience": 1042,
+            "logins": 198,
+            "wealth": 9805772,
+            "classify": 0,
+            "score": "2.88"
+        },
+        {
+            "id": 10008,
+            "username": "user-8",
+            "sex": 0,
+            "city": 1,
+            "sign": "签名-8",
+            "experience": 942,
+            "logins": 147,
+            "wealth": 96230862,
+            "classify": 2,
+            "score": "79.54"
+        }
+    ]
+}

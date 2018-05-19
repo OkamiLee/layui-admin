@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="layui/css/layui.css" />
+		<link rel="stylesheet" href="css/public.css" />
+	</head>
+	<body>
+		<div class="layui-col-md6">
+			<div class="line" id='line1'></div>
+		</div>
+		<div class="layui-col-md6">
+			<div class="line" id='line2'></div>
+		</div>
+		<div class="layui-col-md6">
+			<div class="line" id='line3'></div>
+		</div>
+		<div class="layui-col-md6">
+			<div class="line" id='line4'></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/echarts.min.js" ></script>
+	<script type="text/javascript" src="layui/layui.js" ></script>
+	<script>
+		layui.use(['jquery','element'],function(){
+			var $ = layui.jquery;
+		})
+		var category = [];
+		var dottedBase = +new Date();
+		var lineData = [];
+		var barData = [];
+		
+		for (var i = 0; i < 20; i++) {
+		    var date = new Date(dottedBase += 1000 * 3600 * 24);
+		    category.push([
+		        date.getFullYear(),
+		        date.getMonth() + 1,
+		        date.getDate()
+		    ].join('-'));
+		    var b = Math.random() * 200;
+		    var d = Math.random() * 200;
+		    barData.push(b)
+		    lineData.push(d + b);
+		}
+		
+		// option
+		var option1 = {
+		    tooltip: {
+		        trigger: 'axis',
+		        axisPointer: {
+		            type: 'shadow',
+		            label: {
+		                show: true,
+		                backgroundColor: '#0f375f'
+		            }
+		        }
+		    },
+		    legend: {
+		        data: ['line', 'bar'],
+		        textStyle: {
+		            color: '#0f375f'
+		        }
+		    },
+		    xAxis: {
+		        data: category,
+		        axisLine: {
+		            lineStyle: {
+		                color: '#0f375f'
+		            }
+		        }
+		    },
+		    yAxis: {
+		        splitLine: {show: false},
+		        axisLine: {
+		            lineStyle: {
+		                color: '#0f375f'
+		            }
+		        }
+		    },
+		    series: [{
+		        name: 'line',
+		        type: 'line',
+		        smooth: true,
+		        showAllSymbol: true,
+		        symbol: 'emptyCircle',
+		        symbolSize: 15,
+		        data: lineData
+		    }, {
+		        name: 'bar',
+		        type: 'bar',
+		        barWidth: 10,
+		        itemStyle: {
+		            normal: {
+		                barBorderRadius: 5,
+		                color: new echarts.graphic.LinearGradient(
+		                    0, 0, 0, 1,
+		                    [
+		                        {offset: 0, color: '#14c8d4'},
+		                        {offset: 1, color: '#43eec6'}
+		                    ]
+		                )
+		            }
+		        },
+		        data: barData
+		    }, {
+		        name: 'line',
+		        type: 'bar',
+		        barGap: '-100%',
+		        barWidth: 10,
+		        itemStyle: {
+		            normal: {
+		                color: new echarts.graphic.LinearGradient(
+		                    0, 0, 0, 1,
+		                    [
+		                        {offset: 0, color: 'rgba(20,200,212,0.5)'},
+		                        {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
+		                        {offset: 1, color: 'rgba(20,200,212,0)'}
+		                    ]
+		                )
+		            }
+		        },
+		        z: -12,
+		        data: lineData
+		    }, {
+		        name: 'dotted',
+		        type: 'pictorialBar',
+		        symbol: 'rect',
+		        itemStyle: {
+		            normal: {
+		                color: '#0f375f'
+		            }
+		        },
+		        symbolRepeat: true,
+		        symbolSize: [12, 4],
+		        symbolMargin: 1,
+		        z: -10,
+		        data: lineData
+		    }]
+		};
+        var line1 = echarts.init(document.getElementById('line1'));
+        line1.setOption(option1);
+        
+        
+        //line2
+        var option2 = {
+		    title : {
+		        text: '某地区蒸发量和降水量',
+		        subtext: '纯属虚构'
+		    },
+		    tooltip : {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:['蒸发量','降水量']
+		    },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            dataView : {show: true, readOnly: false},
+		            magicType : {show: true, type: ['line', 'bar']},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    calculable : true,
+		    xAxis : [
+		        {
+		            type : 'category',
+		            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value'
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'蒸发量',
+		            type:'bar',
+		            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+		            markPoint : {
+		                data : [
+		                    {type : 'max', name: '最大值'},
+		                    {type : 'min', name: '最小值'}
+		                ]
+		            },
+		            markLine : {
+		                data : [
+		                    {type : 'average', name: '平均值'}
+		                ]
+		            }
+		        },
+		        {
+		            name:'降水量',
+		            type:'bar',
+		            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+		            markPoint : {
+		                data : [
+		                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183},
+		                    {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+		                ]
+		            },
+		            markLine : {
+		                data : [
+		                    {type : 'average', name : '平均值'}
+		                ]
+		            }
+		        }
+		    ]
+		};
+        var line2 = echarts.init(document.getElementById('line2'));
+        line2.setOption(option2);
+        
+        //line3
+        var option3 = {
+		    title: {
+		        text: '世界人口总量',
+		        subtext: '数据来自网络'
+		    },
+		    tooltip: {
+		        trigger: 'axis',
+		        axisPointer: {
+		            type: 'shadow'
+		        }
+		    },
+		    legend: {
+		        data: ['2011年', '2012年']
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    xAxis: {
+		        type: 'value',
+		        boundaryGap: [0, 0.01]
+		    },
+		    yAxis: {
+		        type: 'category',
+		        data: ['巴西','印尼','美国','印度','中国','世界人口(万)']
+		    },
+		    series: [
+		        {
+		            name: '2011年',
+		            type: 'bar',
+		            data: [18203, 23489, 29034, 104970, 131744, 630230]
+		        },
+		        {
+		            name: '2012年',
+		            type: 'bar',
+		            data: [19325, 23438, 31000, 121594, 134141, 681807]
+		        }
+		    ]
+		};
+        var line3 = echarts.init(document.getElementById('line3'));
+        line3.setOption(option3);
+        
+        //line4
+        var myData = ['大栅栏', '天安门', '故宫', '景山', '北海公园', '后海', '什刹海', '西单', '玉渊潭', '中央电视塔', '东单', '王府井', '南锣鼓巷', '工体', '潘家园', '琉璃厂'];
+		var databeast = {
+		    1: [389, 259, 262, 324, 232, 176, 196, 214, 133, 370, 268, 360, 185, 392, 392, 153],
+		    2: [111, 315, 139, 375, 204, 352, 163, 258, 385, 209, 209, 243, 204, 352, 163, 258],
+		    3: [227, 210, 328, 292, 241, 110, 130, 185, 392, 392, 153, 187, 150, 200, 250, 300],
+		    4: [100, 350, 300, 250, 200, 150, 100, 150, 200, 250, 300, 350, 400, 350, 300, 250],
+		    5: [280, 128, 255, 254, 313, 143, 360, 343, 338, 163, 333, 317, 263, 302, 372, 163],
+		    6: [121, 388, 233, 309, 133, 308, 297, 283, 349, 273, 229, 238, 224, 291, 185, 203],
+		    7: [200, 350, 300, 250, 200, 150, 100, 150, 200, 250, 300, 350, 400, 350, 300, 250],
+		    8: [380, 129, 173, 101, 310, 393, 386, 296, 366, 268, 208, 149, 356, 239, 208, 330],
+		    9: [363, 396, 388, 108, 325, 120, 180, 292, 200, 309, 223, 236, 209, 271, 215, 216],
+		    10: [300, 350, 300, 250, 200, 150, 100, 150, 200, 250, 300, 350, 400, 350, 300, 250],
+		    11: [100, 350, 300, 250, 200, 150, 100, 150, 200, 250, 300, 350, 400, 350, 300, 250],
+		    12: [280, 128, 255, 254, 313, 143, 360, 343, 338, 163, 333, 317, 263, 302, 372, 163],
+		
+		};
+		var databeauty = {
+		    1: [121, 388, 233, 309, 133, 308, 297, 283, 349, 273, 229, 238, 224, 291, 185, 203],
+		    2: [200, 350, 300, 250, 200, 150, 100, 150, 200, 250, 300, 350, 400, 350, 300, 250],
+		    3: [380, 129, 173, 101, 310, 393, 386, 296, 366, 268, 208, 149, 356, 239, 208, 330],
+		    4: [363, 396, 388, 108, 325, 120, 180, 292, 200, 309, 223, 236, 209, 271, 215, 216],
+		    5: [300, 350, 300, 250, 200, 150, 100, 150, 200, 250, 300, 350, 400, 350, 300, 250],
+		    6: [100, 350, 300, 250, 200, 150, 100, 150, 200, 250, 300, 350, 400, 350, 300, 250],
+		    7: [280, 128, 255, 254, 313, 143, 360, 343, 338, 163, 333, 317, 263, 302, 372, 163],
+		    8: [389, 259, 262, 324, 232, 176, 196, 214, 133, 370, 268, 360, 185, 392, 392, 153],
+		    9: [111, 315, 139, 375, 204, 352, 163, 258, 385, 209, 209, 243, 204, 352, 163, 258],
+		    10: [227, 210, 328, 292, 241, 110, 130, 185, 392, 392, 153, 187, 150, 200, 250, 300],
+		    11: [100, 350, 300, 250, 200, 150, 100, 150, 200, 250, 300, 350, 400, 350, 300, 250],
+		    12: [280, 128, 255, 254, 313, 143, 360, 343, 338, 163, 333, 317, 263, 302, 372, 163],
+		
+		};
+		var timeLineData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+		
+		var option4 = {
+		    baseOption: {
+		        timeline: {
+		            show: true,
+		            axisType: 'category',
+		            tooltip: {
+		                show: true,
+		                formatter: function(params) {
+		                    console.log(params);
+		                    return params.name + '月份数据统计';
+		                }
+		            },
+		            autoPlay: true,
+		            currentIndex: 6,
+		            playInterval: 1000,
+		            label: {
+		                normal: {
+		                    show: true,
+		                    interval: 'auto',
+		                    formatter: '{value}月',
+		                },
+		            },
+		            data: [],
+		        },
+		        title: {
+		            //   text:'大北京景点帅哥美女统计', 
+		            textStyle: {
+		                color: '#000',
+		                fontSize: 16,
+		            },
+		            subtext: '作者:花自飘凌水自流',
+		        },
+		        legend: {
+		            data: ['帅哥', '美女'],
+		            top: 4,
+		            right: '20%',
+		            textStyle: {
+		                color: '#000',
+		            },
+		        },
+		        tooltip: {
+		            show: true,
+		            trigger: 'axis',
+		            formatter: '{b}<br/>{a}: {c}人',
+		            axisPointer: {
+		                type: 'shadow',
+		            }
+		        },
+		        grid: [{
+		            show: false,
+		            left: '4%',
+		            top: 60,
+		            bottom: 60,
+		            containLabel: true,
+		            width: '46%',
+		        }, {
+		            show: false,
+		            left: '50.5%',
+		            top: 80,
+		            bottom: 60,
+		            width: '0%',
+		        }, {
+		            show: false,
+		            right: '4%',
+		            top: 60,
+		            bottom: 60,
+		            containLabel: true,
+		            width: '46%',
+		        }, ],
+		
+		        xAxis: [
+		            {
+		            type: 'value',
+		            inverse: true,
+		            axisLine: {
+		                show: false,
+		            },
+		            axisTick: {
+		                show: false,
+		            },
+		            position: 'top',
+		            axisLabel: {
+		                show: true,
+		                textStyle: {
+		                    color: '#B2B2B2',
+		                    fontSize: 12,
+		                },
+		            },
+		            splitLine: {
+		                show: true,
+		                lineStyle: {
+		                    color: '#1F2022',
+		                    width: 1,
+		                    type: 'solid',
+		                },
+		            },
+		        }, {
+		            gridIndex: 1,
+		            show: false,
+		        }, {
+		            gridIndex: 2,
+		            type: 'value',
+		            axisLine: {
+		                show: false,
+		            },
+		            axisTick: {
+		                show: false,
+		            },
+		            position: 'top',
+		            axisLabel: {
+		                show: true,
+		                textStyle: {
+		                    color: '#B2B2B2',
+		                    fontSize: 12,
+		                },
+		            },
+		            splitLine: {
+		                show: true,
+		                lineStyle: {
+		                    color: '#1F2022',
+		                    width: 1,
+		                    type: 'solid',
+		                },
+		            },
+		        }, ],
+		        yAxis: [{
+		            type: 'category',
+		            inverse: true,
+		            position: 'right',
+		            axisLine: {
+		                show: false
+		            },
+		            axisTick: {
+		                show: false
+		            },
+		            axisLabel: {
+		                show: false,
+		                margin: 8,
+		                textStyle: {
+		                    color: '#9D9EA0',
+		                    fontSize: 12,
+		                },
+		
+		            },
+		            data: myData,
+		        }, {
+		            gridIndex: 1,
+		            type: 'category',
+		            inverse: true,
+		            position: 'left',
+		            axisLine: {
+		                show: false
+		            },
+		            axisTick: {
+		                show: false
+		            },
+		            axisLabel: {
+		                show: true,
+		                textStyle: {
+		                    color: '#9D9EA0',
+		                    fontSize: 12,
+		                },
+		
+		            },
+		            data: myData.map(function(value) {
+		                return {
+		                    value: value,
+		                    textStyle: {
+		                        align: 'center',
+		                    }
+		                }
+		            }),
+		        }, {
+		            gridIndex: 2,
+		            type: 'category',
+		            inverse: true,
+		            position: 'left',
+		            axisLine: {
+		                show: false
+		            },
+		            axisTick: {
+		                show: false
+		            },
+		            axisLabel: {
+		                show: false,
+		                textStyle: {
+		                    color: '#9D9EA0',
+		                    fontSize: 12,
+		                },
+		
+		            },
+		            data: myData,
+		        }, ],
+		        series: [],
+		
+		    },
+		
+		    options: [],
+		
+		
+		};
+		
+		for (var i = 0; i < timeLineData.length; i++) {
+		    option4.baseOption.timeline.data.push(timeLineData[i]);
+		    option4.options.push({
+		        title: {
+		            text: '大北京' + timeLineData[i] + '月份城区景点帅哥美女统计',
+		        },
+		        series: [{
+		                name: '帅哥',
+		                type: 'bar',
+		                barGap: 20,
+		                barWidth: 20,
+		                label: {
+		                    normal: {
+		                        show: false,
+		                    },
+		                    emphasis: {
+		                        show: true,
+		                        position: 'left',
+		                        offset: [0, 0],
+		                        textStyle: {
+		                            color: '#fff',
+		                            fontSize: 14,
+		                        },
+		                    },
+		                },
+		                itemStyle: {
+		                    normal: {
+		                        color: '#659F83',
+		                    },
+		                    emphasis: {
+		                        color: '#08C7AE',
+		                    },
+		                },
+		                data: databeast[timeLineData[i]],
+		            },
+		
+		
+		            {
+		                name: '美女',
+		                type: 'bar',
+		                barGap: 20,
+		                barWidth: 20,
+		                xAxisIndex: 2,
+		                yAxisIndex: 2,
+		                label: {
+		                    normal: {
+		                        show: false,
+		                    },
+		                    emphasis: {
+		                        show: true,
+		                        position: 'right',
+		                        offset: [0, 0],
+		                        textStyle: {
+		                            color: '#fff',
+		                            fontSize: 14,
+		                        },
+		                    },
+		                },
+		                itemStyle: {
+		                    normal: {
+		                        color: '#F68989',
+		                    },
+		                    emphasis: {
+		                        color: '#F94646',
+		                    },
+		                },
+		                data: databeauty[timeLineData[i]],
+		            }
+		        ]
+		    });
+		}
+		var line4 = echarts.init(document.getElementById('line4'));
+        line4.setOption(option4);
+	</script>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	    <meta name="Author" content="Lee">
+	    <meta name="Keywords" content="后台模板">
+	    <title></title>
+	    <link rel="stylesheet" href="layui/css/layui.css">
+	    <link rel="stylesheet" href="css/public.css" />
+	    <script src="layui/layui.js"></script>
+	</head>
+	<body>
+		<div class="layui-col-md6">
+			<div class="line" id='line1'></div>
+		</div>
+		<div class="layui-col-md6">
+			<div class="line" id='line2'></div>
+		</div>
+		<div class="layui-col-md6">
+			<div class="line" id='line3'></div>
+		</div>
+		<div class="layui-col-md6">
+			<div class="line" id='line4'></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/echarts.min.js" ></script>
+	<script type="text/javascript" src="layui/layui.js" ></script>
+	<script>
+		layui.use(['jquery','element'],function(){
+			var $ = layui.jquery;
+		})
+		
+		var option1 = {
+		    title : {
+		        text: '某站点用户访问来源',
+		        subtext: '纯属虚构',
+		        x:'center'
+		    },
+		    tooltip : {
+		        trigger: 'item',
+		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		    },
+		    legend: {
+		        orient: 'vertical',
+		        left: 'left',
+		        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+		    },
+		    series : [
+		        {
+		            name: '访问来源',
+		            type: 'pie',
+		            radius : '55%',
+		            center: ['50%', '60%'],
+		            data:[
+		                {value:335, name:'直接访问'},
+		                {value:310, name:'邮件营销'},
+		                {value:234, name:'联盟广告'},
+		                {value:135, name:'视频广告'},
+		                {value:1548, name:'搜索引擎'}
+		            ],
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 10,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                }
+		            }
+		        }
+		    ]
+		};        
+		var line1 = echarts.init(document.getElementById('line1'));
+        line1.setOption(option1);  
+		
+		//line2
+		var uploadedDataURL = "/asset/get/s/data-1482228126093-SJLj-tUNe.png";
+		var percentage = [0.58, 0.24, 0.16, 0.02];
+		var radius = [0.4];
+		for (var i = 1; i < percentage.length; ++i) {
+		    radius.push(radius[0] / Math.sqrt(percentage[0] / percentage[i]));
+		}
+		var colors = ['#ec5845', '#f28a7d', '#fbdcd8', '#fff'];
+		var labels = ['≥500元：2%', '≥200元：16%', '≥100元：24%', '其他：58%'];
+		var left = 0.3;
+		
+		var series = [{
+		    type: 'pie',
+		    radius: [30, '40%'],
+		    center: ['50%', 160],
+		    roseType: 'radius',
+		    color: ['#f2c955', '#00a69d', '#46d185', '#ec5845'],
+		    data: [{
+		            value: 7,
+		            name: '其他'
+		        }, {
+		            value: 12,
+		            name: '自己制作'
+		        }, {
+		            value: 38,
+		            name: '线下购买'
+		        }, {
+		            value: 53,
+		            name: '网上购买'
+		        }
+		    ],
+		    label: {
+		        normal: {
+		            textStyle: {
+		                color: '#333',
+		                fontSize: 16
+		            },
+		            formatter: function (param) {
+		                return param.name + ':\n' + param.value + '%';
+		            }
+		        }
+		    },
+		    labelLine: {
+		        normal: {
+		            lineStyle: {
+		                width: 2
+		            }
+		        }
+		    },
+		    itemStyle: {
+		        normal: {
+		            shadowBlur: 30,
+		            shadowColor: 'rgba(0, 0, 0, 0.4)'
+		        }
+		    }
+		}];
+		for (var i = 0; i < percentage.length; ++i) {
+		    series.push({
+		        type: 'pie',
+		        silent: true,
+		        name: labels[percentage.length - i - 1],
+		        radius: [0, radius[i] * 100 + '%'],
+		        label: {
+		            normal: {
+		                show: false,
+		            }
+		        },
+		        color: [colors[i]],
+		        center: [(left + (-radius[i] + radius[0]) / 2) * 100 + '%', '75%'],
+		        data: [{
+		            itemStyle: {
+		                normal: {
+		                    color: colors[i]
+		                }
+		            }
+		        }],
+		        itemStyle: {
+		            normal: {
+		                shadowBlur: 30,
+		                shadowColor: 'rgba(0, 0, 0, 0.25)'
+		            }
+		        }
+		    });
+		}
+		
+		var option2 = {
+		    legend: {
+		        data: labels,
+		        top: '66%',
+		        left: '55%',
+		        orient: 'vertical'
+		    },
+		    toolbox: {
+		        show: true,
+		        feature: {
+		            mark: {
+		                show: true
+		            },
+		            dataView: {
+		                show: true,
+		                readOnly: false
+		            },
+		            magicType: {
+		                show: true,
+		                type: ['pie', 'funnel']
+		            },
+		            restore: {
+		                show: true
+		            },
+		            saveAsImage: {
+		                show: true
+		            }
+		        }
+		    },
+		    calculable: true,
+		    series: series,
+		    graphic: {
+		        elements: [{
+		            type: 'image',
+		            style: {
+		                image: uploadedDataURL,
+		                width: 30,
+		                height: 30
+		            },
+		            left: 'center',
+		            top: 145
+		        }]
+		    }
+		};
+		var line2 = echarts.init(document.getElementById('line2'));
+        line2.setOption(option2);
+        
+        //line3
+        var echartData = [{
+		    value: 1986,
+		    name: '市科委'
+		}, {
+		    value: 2148,
+		    name: '公共信用信息平台'
+		}, {
+		    value: 5659,
+		    name: '国资委'
+		}, {
+		    value: 1476,
+		    name: '人保局'
+		}, {
+		    value: 144,
+		    name: '安全局'
+		}, {
+		    value: 3941,
+		    name: '市保监会'
+		}, {
+		    value: 1583,
+		    name: '市商务委'
+		}, {
+		    value: 4356,
+		    name: '市社工委'
+		}, {
+		    value: 4335,
+		    name: '市审计局'
+		}, {
+		    value: 7878,
+		    name: '审计署上海办事处'
+		}, {
+		    value: 878,
+		    name: '市促进中小企业发展办公室'
+		}, {
+		    value: 8535,
+		    name: '市反恐工作办公室'
+		}, {
+		    value: 9899,
+		    name: '市小微企业发展研究办公室'
+		}, {
+		    value: 5432,
+		    name: '市税务局'
+		}, {
+		    value: 2357,
+		    name: '张江高新区园区'
+		}, {
+		    value: 9865,
+		    name: '中国电信上海分公司'
+		}, {
+		    value: 4332,
+		    name: '中国建设银行上海分公司'
+		}, {
+		    value: 4667,
+		    name: '市法制办'
+		}, {
+		    value: 2354,
+		    name: '市合作交流办'
+		}, {
+		    value: 5648,
+		    name: '市人口办'
+		}, {
+		    value: 5787,
+		    name: '市出入境管理局'
+		}, {
+		    value: 8795,
+		    name: '市民政局'
+		}, {
+		    value: 8795,
+		    name: '中国人民银行'
+		}, {
+		    value: 7454,
+		    name: '通管局'
+		}, {
+		    value: 6745,
+		    name: '人保局'
+		}];
+		
+		var rich = {
+		    total: {
+		        color: "#ffc72b",
+		        fontSize: 40,
+		        align: 'center'
+		    }
+		};
+		
+		var option3 = {
+		    backgroundColor: '#031f2d',
+		    title: [{
+		        text: '市工商局',
+		        left: 'center',
+		        top: '53%',
+		        padding: [24, 0],
+		        textStyle: {
+		            color: '#fff',
+		            fontSize: 18,
+		            align: 'center'
+		        }
+		    },{
+		        text: '2017年度市工商与外部单位共享情况',
+		        left: 'left',
+		        textStyle: {
+		            color: '#fff',
+		            fontSize: 18,
+		            align: 'center'
+		        }
+		    }],
+		    tooltip: {
+		        trigger: 'item',
+		        formatter: "{a} <br/>{b}: {c} ({d}%)"
+		    },
+		    legend: {
+		        selectedMode: false,
+		        formatter: function(name) {
+		            var total = 0; //各科正确率总和
+		            echartData.forEach(function(value, index, array) {
+		                //total += value.value;
+		               total = array.length;
+		            });
+		            return '共计{total|' + total + '}家单位';
+		        },
+		        data: [echartData[0].name],
+		        left: 'center',
+		        top: 'center',
+		        icon: 'none',
+		        align: 'center',
+		        textStyle: {
+		            color: "#fff",
+		            fontSize: 16,
+		            rich: rich
+		        },
+		    },
+		    series: [{
+		        name: '',
+		        type: 'pie',
+		        radius: ['40%', '55%'],
+		        label: {
+		            normal: {
+		                //formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+		                formatter: '{b|{b}：}{c}  {per|{d}%}  ',
+		                backgroundColor: '#eee',
+		                borderColor: '#aaa',
+		                borderWidth: 1,
+		                borderRadius: 4,
+		                rich: {
+		                    a: {
+		                        color: '#999',
+		                        lineHeight: 22,
+		                        align: 'center'
+		                    },
+		                    hr: {
+		                        borderColor: '#aaa',
+		                        width: '100%',
+		                        borderWidth: 0.5,
+		                        height: 0
+		                    },
+		                    b: {
+		                        fontSize: 16,
+		                        lineHeight: 33
+		                    },
+		                    per: {
+		                        color: '#eee',
+		                        backgroundColor: '#334455',
+		                        padding: [2, 4],
+		                        borderRadius: 2
+		                    }
+		                }
+		            }
+		        },
+		        data: echartData
+		    }]
+		};
+        var line3 = echarts.init(document.getElementById('line3'));
+        line3.setOption(option3);
+        
+        //line4
+        var dataStyle = {
+		    normal: {
+		        label: {
+		            show: false
+		        },
+		        labelLine: {
+		            show: false
+		        },
+		        shadowBlur: 15,
+		        shadowColor: 'white',
+		    }
+		};
+		var placeHolderStyle = {
+		    normal: {
+		        color: 'rgba(0,0,0,0)',
+		        label: {
+		            show: false
+		        },
+		        labelLine: {
+		            show: false
+		        }
+		    },
+		    emphasis: {
+		        color: 'rgba(0,0,0,0)'
+		    }
+		};
+		var option4 = {
+		    backgroundColor: 'black',
+		    color: ['#85b6b2', '#6d4f8d', '#cd5e7e', '#e38980', '#f7db88'],
+		    legend: {
+		        top: "0%",
+		        left: "36%",
+		        itemHeight: 25,
+		        itemWidth: 35,
+		        data: ['01', '02', '03', '04', '05'],
+		        textStyle: {
+		            color: '#fff'
+		        },
+		
+		        selectedMode: true,
+		        orient: "vertical",
+		
+		    },
+		    series: [{
+		            name: 'Line 1',
+		            type: 'pie',
+		            clockWise: true,
+		            radius: ['92%', '100%'],
+		            itemStyle: dataStyle,
+		            hoverAnimation: false,
+		
+		            data: [{
+		                    value: 150,
+		                    name: '01'
+		                }, {
+		                    value: 50,
+		                    name: 'invisible',
+		                    itemStyle: placeHolderStyle
+		                }
+		
+		            ]
+		        }, {
+		            name: 'Line 2',
+		            type: 'pie',
+		            clockWise: true,
+		            radius: ['83.8%', '91.8%'],
+		            itemStyle: dataStyle,
+		            hoverAnimation: false,
+		
+		            data: [{
+		                value: 150,
+		                name: '02'
+		            }, {
+		                value: 60,
+		                name: 'invisible',
+		                itemStyle: placeHolderStyle
+		            }]
+		        }, {
+		            name: 'Line 3',
+		            type: 'pie',
+		            clockWise: true,
+		            hoverAnimation: false,
+		            radius: ['75.6%', '83.6%'],
+		            itemStyle: dataStyle,
+		
+		            data: [{
+		                value: 80,
+		                name: '03'
+		            }, {
+		                value: 50,
+		                name: 'invisible',
+		                itemStyle: placeHolderStyle
+		            }]
+		        }, {
+		            name: 'Line 4',
+		            type: 'pie',
+		            clockWise: true,
+		            hoverAnimation: false,
+		            radius: ['67.4%', '75.4%'],
+		            itemStyle: dataStyle,
+		
+		            data: [{
+		                value: 45,
+		                name: '04'
+		            }, {
+		                value: 30,
+		                name: 'invisible',
+		                itemStyle: placeHolderStyle
+		            }]
+		        }, {
+		            name: 'Line 5',
+		            type: 'pie',
+		            clockWise: true,
+		            hoverAnimation: false,
+		            radius: ['59.2%', '67.2%'],
+		            itemStyle: dataStyle,
+		
+		            data: [{
+		                value: 30,
+		                name: '05'
+		            }, {
+		                value: 30,
+		                name: 'invisible',
+		                itemStyle: placeHolderStyle
+		            }]
+		        },
+		
+		    ]
+		};
+		setInterval(function() {
+		    line4.setOption({
+		        series: [{
+		            name: 'Line 1',
+		            data: [{
+		                    value: Math.random(),
+		                    name: '01'
+		                }, {
+		                    value: 1-Math.random()+0.33,
+		                    name: 'invisible',
+		                    itemStyle: placeHolderStyle
+		                }
+		
+		            ]
+		        }, {
+		            name: 'Line 2',
+		            data: [{
+		                value: Math.random(),
+		                name: '02'
+		            }, {
+		                value: 1-Math.random()+0.33,
+		                name: 'invisible',
+		                itemStyle: placeHolderStyle
+		            }]
+		        }, {
+		            name: 'Line 3',
+		            data: [{
+		                value: Math.random(),
+		                name: '03'
+		            }, {
+		                value: 1-Math.random()+0.33,
+		                name: 'invisible',
+		                itemStyle: placeHolderStyle
+		            }]
+		        }, {
+		            name: 'Line 4',
+		            data: [{
+		                value: Math.random(),
+		                name: '04'
+		            }, {
+		                value: 1-Math.random()+0.33,
+		                name: 'invisible',
+		                itemStyle: placeHolderStyle
+		            }]
+		        }, {
+		            name: 'Line 5',
+		            data: [{
+		                value: Math.random(),
+		                name: '05'
+		            }, {
+		                value: 1-Math.random()+0.33,
+		                name: 'invisible',
+		                itemStyle: placeHolderStyle
+		            }]
+		        }, ]
+		    });
+		}, 1000);
+        
+        var line4 = echarts.init(document.getElementById('line4'));
+        line4.setOption(option4);
+        
+	</script>
+</html>
